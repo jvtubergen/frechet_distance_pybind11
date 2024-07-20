@@ -1,3 +1,10 @@
+Pybind11:
+=========
+1. Follow instructions to installing pybind11 dependencies.
+2. Construct python module with the ./pybind11_build.sh script.
+3. Copy the resulting frechet_distance module in the build directory to the src folder of your python code. (Module should live in same folder as the main.py file)
+4. Import the module in python as usual and compute the Fréchet distance with it. (See example.py)
+
 Build:
 ======
 Simply execute the ./build.sh script and then you find the binaries in the build directory.
