@@ -1,7 +1,13 @@
+#include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
+#include <pybind11/stl_bind.h>
+
 #include "defs.h"
 #include "query.h"
 #include <vector>
 #include <tuple>
+
+namespace py = pybind11;
 
 using PointList = std::vector<std::tuple<double, double>>;
 
@@ -20,6 +26,7 @@ Curve curveFromPointList(std::vector<std::tuple<double, double>> ps)
     return c;
 }
 
+
 // Compute whether the Fréchet distance between two curves are below a given distance threshold.
 bool compute_single_threshold(PointList source, PointList target, distance_t distance) 
 {
@@ -37,4 +44,10 @@ bool compute_single_threshold(PointList source, PointList target, distance_t dis
 	// assert(results.size() == 1);
     // We compute one result (because one query/target curve), and can find one valid candidate (the source curve).
 	return results[0].curve_ids.size() == 1;
+}
+
+PYBIND11_MODULE(frechet_distance_module, m) {
+    py::class_<Curve>(m, "Curve");
+    m.def("compute_single_threshold", &compute_single_threshold, py::arg("source"), py::arg("target"), py::arg("distance"),
+          "A function that checks Fréchet distance between two Curves is below the provided threshold.");
 }

@@ -252,3 +252,14 @@ endif()
 #     WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/src"
 #     COMMAND $<TARGET_FILE:run_tests>
 # )
+
+
+# Linking function for usage with Python with pybind11.
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")  # Adds -fPIC flag
+find_package(pybind11 REQUIRED)
+add_library(frechet_distance_module MODULE src/pybind11.cpp $<TARGET_OBJECTS:common>)
+target_link_libraries(frechet_distance_module PRIVATE pybind11::module)
+set_target_properties(frechet_distance_module PROPERTIES
+  COMPILE_FLAGS "-fPIC"
+)
