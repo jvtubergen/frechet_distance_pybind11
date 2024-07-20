@@ -57,6 +57,13 @@ Query::~Query()
 	}
 }
 
+// Update the curve (source) data to a single curve.
+void Query::setSourceCurve(Curve curve) 
+{
+	curve_data.clear();
+	curve_data.push_back(curve);
+}
+
 void Query::readCurveData(std::string const& curve_data_file)
 {
 	is_ready = false;
@@ -91,6 +98,14 @@ void Query::readCurveData(std::string const& curve_data_file)
 			ERROR("A curve file could not be opened: " << curve_directory + curve_filename);
 		}
 	}
+}
+
+// Upate the query curve data to a single curve and distance threshoold.
+void Query::setQueryCurve(Curve curve, distance_t d)
+{
+	query_elements.clear();
+	QueryElement element = QueryElement(std::move(curve), d);
+	query_elements.push_back(element);
 }
 
 void Query::readQueryCurves(std::string const& query_curves_file)

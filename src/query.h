@@ -14,7 +14,9 @@ public:
 	Query(std::string const& curve_directory);
 	~Query();
 
+	void setSourceCurve(Curve curve);
 	void readCurveData(std::string const& curve_data_file);
+	void setQueryCurve(Curve curve, distance_t d);
 	void readQueryCurves(std::string const& query_curves_file);
 	void setAlgorithm(std::string const& frechet_version);
 	void getReady();
